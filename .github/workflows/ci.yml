@@ -1,0 +1,27 @@
+name: CI
+on: [push]
+jobs:
+  lhci:
+    name: Lighthouse
+    runs-on: ubuntu-latest
+    steps:
+        env:
+          NODEJS_VERSION: ${{ secrets.NODEJS_VERSION }}
+          PR_NUMBER: ${{ github.event.number }}
+      - name: Using Variables
+        run: echo "$NODEJS_VERSION"
+        run: echo $PR_NUMBER
+        run: node --version
+
+      # - uses: actions/checkout@v2
+      # - name: Use Node.js $NODEJS_VERSION
+      #   uses: actions/setup-node@v1
+      #   with:
+      #     node-version: $NODEJS_VERSION 
+      # - name: npm install
+        # run: |
+          # npm install
+      # - name: run Lighthouse CI
+        # run: |
+          # npm install -g @lhci/cli@0.6.x
+          # lhci autorun
