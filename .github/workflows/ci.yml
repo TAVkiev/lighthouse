@@ -1,28 +1,23 @@
 name: CI
-on: [push, pull_request]
-env:
-  NODEJS_VERSION: ${{ secrets.NODEJS_VERSION }}
-  PR_NUMBER: ${{ github.event.number }}
+on: [push]
 jobs:
   lhci:
     name: Lighthouse
     runs-on: ubuntu-latest
     steps:
-      - name: Using Variables
-        run: |
-          echo "$NODEJS_VERSION"
-          echo $PR_NUMBER
-          node --version
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Use Node.js 14.15.0
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.15.0
+      - name: Print nodejs version
+        run: node --version
 
-      # - uses: actions/checkout@v2
-      # - name: Use Node.js $NODEJS_VERSION
-      #   uses: actions/setup-node@v1
-      #   with:
-      #     node-version: $NODEJS_VERSION 
-      # - name: npm install
-        # run: |
-          # npm install
       # - name: run Lighthouse CI
-        # run: |
-        #   npm install -g @lhci/cli@0.6.x
-        #   lhci autorun
+      #   run: |
+      #     npm install -g @lhci/cli@0.6.x
+      #     lhci autorun
+      #   env:
+      #     LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
