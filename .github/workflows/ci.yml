@@ -1,13 +1,13 @@
 name: CI
 on: [push, pull_request]
+env:
+  NODEJS_VERSION: ${{ secrets.NODEJS_VERSION }}
+  PR_NUMBER: ${{ github.event.number }}
 jobs:
   lhci:
     name: Lighthouse
     runs-on: ubuntu-latest
     steps:
-        env:
-          NODEJS_VERSION: ${{ secrets.NODEJS_VERSION }}
-          PR_NUMBER: ${{ github.event.number }}
       - name: Using Variables
         run: echo "$NODEJS_VERSION"
         run: echo $PR_NUMBER
